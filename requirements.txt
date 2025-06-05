@@ -1,0 +1,6 @@
+pyttsx3
+langchain-ollama
+langchain
+SpeechRecognition
+pyaudio
+PyQt5 # Nova dependência
