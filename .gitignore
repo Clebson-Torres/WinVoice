@@ -1,0 +1,58 @@
+# Arquivos de Sistema Operacional
+.DS_Store
+Thumbs.db
+ehthumbs.db
+.spotlight-V100
+.Trashes
+
+# Ambientes Virtuais
+# Pasta padrão do venv
+venv/
+.venv/
+
+
+# Arquivos de Pacote Python
+*.pyc
+__pycache__/
+.Python/
+build/
+develop-eggs/
+dist/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.manifest
+*.mo
+*.pot
+*.log
+*.sqlite3
+
+# Arquivos de IDEs e Editores
+# PyCharm
+.idea/
+.vscode/ # Se usar VS Code
+*.iml # Arquivos de módulo do IntelliJ IDEA
+
+# Logs e Dados Gerados (se houver)
+*.log
+*.txt # Se você gerar arquivos de texto temporários ou de log
+output/ # Se você tiver uma pasta para saídas geradas
+
+# Arquivos de configuração sensíveis (se você os tiver)
+# Exemplo: se você salvar chaves de API em um arquivo .env
+.env
+.env.*
+config.ini # Ou qualquer outro arquivo de configuração com dados sensíveis
+credentials.json # Ou qualquer arquivo JSON com credenciais
+
+# Dados do SpeechRecognition ou outros caches temporários
+# Se o SpeechRecognition gerar arquivos temporários, adicione-os aqui.
+# No geral, a lib não persiste muitos dados, mas é bom ter em mente.
