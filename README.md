@@ -64,6 +64,7 @@
 - Ollama instalado e rodando
 - Microfone configurado
 - Placa de vídeo com suporte (ex: RTX 3050 ou superior)
+- Se uma GPU compatível não estiver disponível, o Ollama usará a CPU para inferência, o que pode resultar em um desempenho mais lento dependendo do modelo e do seu processador.
 
 ---
 
@@ -74,6 +75,7 @@
 - `pyttsx3`
 - `SpeechRecognition`
 - `pyaudio`
+- `PyQt5`
 
 Instale com:
 ```bash
