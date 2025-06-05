@@ -70,15 +70,15 @@ class AssistantWorker(QThread):
                     audio = self.recognizer.listen(source)
 
                 entrada = self.recognizer.recognize_google(audio,
-                                                           language="pt-BR").lower()  # Converter para minúsculas aqui
+                                                           language="pt-BR").lower()
 
-                if entrada == "sair":  # Adicionar condição para sair do loop
+                if entrada == "sair":
                     self.assistantResult.emit("Comando cancelado.", "Você pediu para sair.")
                     self.falar("Comando cancelado.")
-                    command_understood = True  # Sai do loop
-                    continue  # Pula para o final do loop
+                    command_understood = True
+                    continue
 
-                self.commandRecognized.emit(entrada)  # Emite o comando reconhecido para UI (opcional)
+                self.commandRecognized.emit(entrada)
 
                 comando = self.gerar_comando(entrada)
                 print(f"\n[+] Comando PowerShell gerado: {comando}")
@@ -97,23 +97,22 @@ class AssistantWorker(QThread):
                     print(f"\n[+] Resultado:\n{resultado}")
                     self.falar("Comando executado.")
                     self.assistantResult.emit("Comando executado!", resultado)
-                    command_understood = True  # Sai do loop
+                    command_understood = True
                 else:
                     self.assistantResult.emit("Comando cancelado.", "")
                     self.falar("Comando cancelado.")
-                    command_understood = True  # Sai do loop, pois o comando foi cancelado
+                    command_understood = True
 
             except sr.UnknownValueError:
                 self.errorOccurred.emit("Não entendi o que você disse. Por favor, repita ou diga 'sair'.")
                 self.falar("Não entendi o que você disse. Por favor, repita ou diga 'sair'.")
-                # Não definimos command_understood = True aqui, para que o loop continue
+
             except Exception as e:
                 self.errorOccurred.emit(f"Erro no assistente: {e}. Por favor, tente novamente ou diga 'sair'.")
                 self.falar(f"Ocorreu um erro: {e}. Por favor, tente novamente ou diga 'sair'.")
                 print(f"❌ Erro Assistente: {e}")
-                # Também não definimos command_understood = True aqui
+
             finally:
-                # Se o comando foi entendido ou o usuário saiu, o loop terminará na próxima iteração
-                # caso contrário, ele continuará.
+
                 if command_understood:
-                    self.finished.emit()  # Sinaliza que o trabalho terminou apenas quando o loop realmente sair
+                    self.finished.emit()

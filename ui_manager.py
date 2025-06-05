@@ -1,5 +1,3 @@
-# ui_manager.py
-
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout, QHBoxLayout, QSizePolicy
 from PyQt5.QtGui import QPixmap, QMovie, QIcon
@@ -43,7 +41,7 @@ class AssistantUI(QWidget):
                                 border: 2px solid white; /* Opcional: borda branca como na sua imagem */
                             }
                         """)
-            self.icon_label.setAlignment(Qt.AlignCenter)  # Centraliza a imagem dentro do QLabel
+            self.icon_label.setAlignment(Qt.AlignCenter)
 
         else:
             print("AVISO: Imagem 'app_icon.png' não encontrada.")
@@ -56,9 +54,9 @@ class AssistantUI(QWidget):
         self.status_label.setStyleSheet("font-size: 20px; color: white; font-weight: bold;")
         self.status_label.setWordWrap(True)
         self.status_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-        # --- ADICIONE ESTA LINHA PARA DEFINIR UMA LARGURA MÍNIMA PARA O LABEL ---
-        self.status_label.setMinimumWidth(200)  # Exemplo: 200 pixels. Ajuste conforme a necessidade.
-        # Você pode usar setMinimumSize(width, height) se também quiser um mínimo de altura.
+
+        self.status_label.setMinimumWidth(200)
+
 
         header_layout.addWidget(self.status_label)
 
@@ -86,7 +84,7 @@ class AssistantUI(QWidget):
         self.status_label.setText(message)
         self.command_label.hide()
         self.command_label.setText("")
-        self.adjustSize()  # Importante reajustar após mudar o texto
+        self.adjustSize()
         self.show()
         self.hide_timer.stop()
 
@@ -98,7 +96,7 @@ class AssistantUI(QWidget):
         else:
             self.command_label.hide()
             self.command_label.setText("")
-        self.adjustSize()  # Importante reajustar após mudar o texto
+        self.adjustSize()
         self.show()
         self.hide_timer.stop()
 
@@ -110,7 +108,7 @@ class AssistantUI(QWidget):
         else:
             self.command_label.hide()
             self.command_label.setText("")
-        self.adjustSize()  # Importante reajustar após mudar o texto
+        self.adjustSize()
         self.show()
         self.hide_timer.start(3000)
 

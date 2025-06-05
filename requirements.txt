@@ -3,4 +3,4 @@ langchain-ollama
 langchain
 SpeechRecognition
 pyaudio
-PyQt5 # Nova dependência
+PyQt5

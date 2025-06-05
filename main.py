@@ -10,11 +10,11 @@ from PyQt5.QtCore import QTimer, QCoreApplication
 from ui_manager import AssistantUI
 from worker_threads import HotwordListener, AssistantWorker
 
-# --- Inicialização da UI (na thread principal da aplicação Python/PyQt) ---
+
 app_qt = QApplication(sys.argv)
 assistant_ui = AssistantUI()
 
-# --- Inicialização do Assistente (Lógica principal) ---
+
 llm = OllamaLLM(model="gemma3:4b")
 tts = pyttsx3.init()
 
@@ -61,7 +61,7 @@ def falar_tts(texto):
     tts.say(texto)
     tts.runAndWait()
 
-# --- Instâncias dos Workers ---
+
 hotword_listener_thread = HotwordListener(hotword="computador")
 assistant_worker_thread = AssistantWorker(
     llm=llm,
@@ -71,23 +71,23 @@ assistant_worker_thread = AssistantWorker(
     falar_func=falar_tts
 )
 
-# --- Conectar Sinais aos Slots da UI ---
-# Hotword Listener -> UI
+
+
 hotword_listener_thread.statusUpdate.connect(assistant_ui.update_status_message)
 hotword_listener_thread.hotwordDetected.connect(assistant_worker_thread.start)
 
-# Assistant Worker -> UI
+
 assistant_worker_thread.assistantResponse.connect(assistant_ui.show_command_and_status)
 assistant_worker_thread.assistantResult.connect(assistant_ui.show_final_result)
-# AQUI: errorOccurred apenas atualiza a UI, não esconde a janela, pois o loop continua
+
 assistant_worker_thread.errorOccurred.connect(assistant_ui.update_status_message)
-# AQUI: finished signal agora volta o HotwordListener ao estado de espera
-assistant_worker_thread.finished.connect(assistant_ui.hide_window) # Esconde a janela após o assistente terminar a tarefa
+
+assistant_worker_thread.finished.connect(assistant_ui.hide_window)
 assistant_worker_thread.finished.connect(lambda: hotword_listener_thread.statusUpdate.emit(f"Diga '{hotword_listener_thread.hotword}' para ativar."))
 
 
-# --- Iniciar o Hotword Listener ---
+
 hotword_listener_thread.start()
 
-# --- Iniciar o loop de eventos da QApplication ---
+
 sys.exit(app_qt.exec_())
