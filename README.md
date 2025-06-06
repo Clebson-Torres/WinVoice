@@ -1,90 +1,123 @@
-# 🎙️  WinVoice
+# 🎙️ WinVoice
 
-**WinVoice** é um assistente de voz offline para Windows que entende comandos em linguagem natural, converte para PowerShell com IA local, confirma por voz e executa no sistema. Ele escuta sua voz, responde com voz e mantém toda a privacidade localmente — sem internet.
-
----
-
-## ✨ Funcionalidades
-
-- 🎤 Reconhecimento de voz (em português)
-- 🧠 Gera comandos PowerShell com IA local (`gemma3:4b`)
-- 💬 Fala a resposta com voz (TTS)
-- ✅ Confirmação por voz antes de executar
-- 📁 Controla arquivos, programas e o sistema com comandos naturais
-- 🔐 100% offline (modelo local via Ollama)
+**WinVoice** is an offline voice assistant for Windows that understands natural language commands, converts them to PowerShell with local AI, confirms by voice, and executes them on the system. It listens to your voice, responds with voice, and maintains complete privacy locally — no internet required.
 
 ---
 
-## 🚀 Como usar
+## ✨ Features
 
-1. **Clone o repositório**
-   ```bash
-   git clone https://github.com/Clebson-Torres/WinVoice.git
-   cd WinVoice
-   ```
+* 🎤 Voice recognition (in Portuguese)
+* 🧠 Generates PowerShell commands with local AI (`gemma3:4b`)
+* 💬 Speaks responses using Text-to-Speech (TTS)
+* ✅ Voice confirmation before execution
+* 📁 Controls files, programs, and the system with natural commands
+* 🔐 100% offline (local model via Ollama)
 
-2. **Crie e ative o ambiente virtual**
-   ```bash
-   python -m venv .venv
-   .\.venv\Scripts\activate
-   ```
+---
+## ⚙️ Language Configuration
 
-3. **Instale as dependências**
-   ```bash
-   pip install -r requirements.txt
-   ```
+Voice recognition uses Google's speech recognition service, which supports various languages via BCP-47 codes (RFC 5646). The default language configured in WinVoice is Brazilian Portuguese (pt-BR).
 
-4. **Instale o Ollama e baixe o modelo Gemma**
-   ```bash
-   ollama pull gemma3:4b
-   ```
+To change the recognition language:
 
-5. **Execute o assistente**
-   ```bash
-   python main.py
-   ```
+Open the worker_threads.py file.
+
+Locate the following lines within the HotwordListener and AssistantWorker classes, where recognize_google is called:
+
+    # Inside HotwordListener.run()
+    frase = self.recognizer.recognize_google(audio, language="pt-BR").lower()
+
+    # Inside AssistantWorker.run()
+    entrada = self.recognizer.recognize_google(audio, language="pt-BR").lower()
+    # And also for confirmation
+    confirmacao = self.recognizer.recognize_google(audio, language="pt-BR").lower()
+
+
+Replace "pt-BR" with the desired language code.
+    
+Examples of language codes:
+
+       English (US): en-US
+
+        Spanish (Spain): es-ES
+
+        French: fr-FR
+
+        German: de-DE
+
+        Japanese: ja-JP
+
+For a more comprehensive list of language codes, consult the SpeechRecognition library documentation or a list of BCP-47 codes.
+
+Note: The Gemma model's (gemma3:4b) translation to PowerShell commands remains in Portuguese, but it can be adapted with more specific prompts if the input language is changed. Speech output (TTS) will also need to be adjusted if you want the assistant to speak in another language; this is done in pyttsx3 settings or by installing additional voice packages in Windows.
+## 🚀 How to Use
+
+1.  **Clone the repository**
+    ```bash
+    git clone [https://github.com/Clebson-Torres/WinVoice.git](https://github.com/Clebson-Torres/WinVoice.git)
+    cd WinVoice
+    ```
+
+2.  **Create and activate the virtual environment**
+    ```bash
+    python -m venv .venv
+    .\.venv\Scripts\activate
+    ```
+
+3.  **Install dependencies**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4.  **Install Ollama and download the Gemma model**
+    ```bash
+    ollama pull gemma3:4b
+    ```
+
+5.  **Run the assistant**
+    ```bash
+    python main.py
+    ```
 
 ---
 
-## 🎯 Exemplos de comandos por voz
+## 🎯 Voice Command Examples
 
-- "Criar uma pasta chamada projetos na área de trabalho"
-- "Mostrar os arquivos da pasta downloads"
-- "Abrir o Spotify"
-- "Encerrar o explorador de arquivos"
-- "Desligar o computador"
-- "Sair" → encerra o assistente
-
----
-
-## 🧩 Requisitos
-
-- Windows 10 ou superior
-- Python 3.10+
-- Ollama instalado e rodando
-- Microfone configurado
-- Placa de vídeo com suporte (ex: RTX 3050 ou superior)
+* "Criar uma pasta chamada projetos na área de trabalho" (Create a folder called projects on the desktop)
+* "Mostrar os arquivos da pasta downloads" (Show files in the downloads folder)
+* "Abrir o Spotify" (Open Spotify)
+* "Encerrar o explorador de arquivos" (Close File Explorer)
+* "Desligar o computador" (Shut down the computer)
+* "Sair" (Exit) → ends the assistant
 
 ---
 
-## 📦 Dependências Python
+## 🧩 Requirements
 
-- `langchain`
-- `langchain-ollama`
-- `pyttsx3`
-- `SpeechRecognition`
-- `pyaudio`
-
-Instale com:
-```bash
-pip install -r requirements.txt
-```
+* Windows 10 or higher
+* Python 3.10+
+* Ollama installed and running
+* Microphone configured
+* Supported graphics card (e.g., RTX 3050 or higher)
+* If a compatible GPU is not available, Ollama will use the CPU for inference, which may result in slower performance depending on the model and your processor.
 
 ---
 
-## 🔒 Privacidade
+## 📦 Python Dependencies
 
-Este projeto é completamente **offline**. Nenhuma informação de voz, comando ou execução é enviada para a internet.
+* `langchain`
+* `langchain-ollama`
+* `pyttsx3`
+* `SpeechRecognition`
+* `pyaudio`
+* `PyQt5`
+
+ Install with:
+ 
+ ```pip install -r requirements.txt```
+
+## 🔒 Privacy
+This project is completely offline. No voice data, commands, or executions are sent to the internet
 
 ---
 
@@ -95,6 +128,6 @@ Este projeto é completamente **offline**. Nenhuma informação de voz, comando 
 
 ---
 
-## 📜 Licença
+## 📜 License
 
-Distribuído sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+Distributed under the MIT License. See the LICENSE file for more details.
